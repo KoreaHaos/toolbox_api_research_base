@@ -1,5 +1,5 @@
 source room_builder.bash;
-function build_secrect_club_haos() {
+function build_secret_club_haos() {
 
     local _directory_path=~
     local _directory_name=secret_club_haos
@@ -10,8 +10,8 @@ function build_secrect_club_haos() {
         then
             mkdir "$_directory_path_and_name"
         else
-            #printf "* * DIRECTORY ALREADY EXISTS!! * * \n";
-            exit 1
+            printf "* * DIRECTORY ALREADY EXISTS!! * * \n";
+            return 1
     fi
     
     add_rooms_to_secrect_club_haos
@@ -46,7 +46,8 @@ function decorate_room() {
         github)
             #printf "Decorating github room!\n"
             default_room_decorator "$1" "$2"
-            build_github_api_secret_room
+            build_github_api_secret_room "$2"
+            
             ;;
         google)
             #printf "Decorating google room!\n"
@@ -63,8 +64,6 @@ function decorate_room() {
             default_room_decorator "$1" "$2"
             ;;
     esac
-        
-    #local _decoration_string="$1\_secrets =  { \"room\": \"cloud9\", \"db_password\": \"password1234\" }; module.exports = $1\_secrets;"
 }
 
 function default_room_decorator() {
@@ -78,12 +77,19 @@ function default_room_decorator() {
     fi
 }
 
-build_secrect_club_haos
+: <<'END'
+if [ build_secret_club_haos ]
+    then printf "Super secret clubhouse has been built!!\n"
+    else printf "BUILDING PROBLEM ENCOUNTERED!!\n"
+fi
+END
+
+build_secret_club_haos 
 
 printf "Destroy secret clubhouse? (Y/n) : "
 read user_is_destructive;
 if [ "$user_is_destructive" == "Y" ]
     then
         printf "Aren't you a bad ass!\n"
-        rm -rf "~/secret_club_haos"
+        rm -rf ~/secret_club_haos
 fi

@@ -1,3 +1,7 @@
+// More involved access..
+
+// ToDo Clean up and make more modular
+
 // Source : http://stackoverflow.com/questions/18112204/get-all-directories-within-directory-nodejs
 // (Heavily modified for understanding, experimentation, and my own use...)
 
